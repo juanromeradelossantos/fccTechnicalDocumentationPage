@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - fccTechnicalDocumentationPage</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<main id="main-doc">
+  <nav id="navbar">
+    <header>An Introduction to R</header>
+    <a class="nav-link" href="#Introduction">Introduction</a>
+    <a class="nav-link" href="#Vectors_and_assignment">Vectors and assignment</a>
+    <a class="nav-link" href="#Vector_arithmetic">Vector arithmetic</a>
+    <a class="nav-link" href="#Generating_regular_sequences">Generating regular sequences</a>
+    <a class="nav-link" href="#Logical_vectors">Logical vectors</a>
+    <a class="nav-link" href="#Missing_values">Missing values</a>
+    <a class="nav-link" href="#Character_vectors">Character vectors</a>
+    <a class="nav-link" href="#Index_vectors">Index vectors</a>
+    <a class="nav-link" href="#Other_types_of_objects">Other types of objects</a>
+    <a class="nav-link" href="#Reference">Reference</a>
+  </nav>
+  <div id="content">
+    <section class="main-section" id="Introduction">
+      <header>Introduction</header>
+      <p>This is an introduction to R (“GNU S”), a language and environment for statistical computing and graphics. R is similar to the award-winning S system, which was developed at Bell Laboratories by John Chambers et al. It provides a wide variety of statistical and graphical techniques (linear and nonlinear modelling, statistical tests, time series analysis, classification, clustering, ...).<br>
+        This manual is for R, version 4.1.3 (2022-03-10).<br><br>
+        Copyright © 1990 W. N. Venables<br>
+        Copyright © 1992 W. N. Venables & D. M. Smith<br>
+        Copyright © 1997 R. Gentleman & R. Ihaka<br>
+        Copyright © 1997, 1998 M. Maechler<br>
+        Copyright © 1999–2021 R Core Team<br><br>
+        Permission is granted to make and distribute verbatim copies of this manual provided the copyright notice and this permission notice are preserved on all copies.<br>
+        Permission is granted to copy and distribute modified versions of this manual under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.<br>
+        Permission is granted to copy and distribute translations of this manual into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the R Core Team.<br><br>
+        Information covered in this page: Simple manipulations; numbers and vectors
+        <ul>
+          <li>Vectors and assignment</li>
+          <li>Vector arithmetic</li>
+          <li>Generating regular sequences</li>
+          <li>Logical vectors</li>
+          <li>Missing values</li>
+          <li>Character vectors</li>
+          <li>Index vectors</li>
+          <li>Other types of objects</li>
+        </ul>
+      </p>
+    </section>
+    <section class="main-section" id="Vectors_and_assignment">
+      <header>Vectors and assignment</header>
+      <p>R operates on named data structures. The simplest such structure is the numeric vector, which is a single entity consisting of an ordered collection of numbers. To set up a vector named <code>x</code>, say, consisting of five numbers, namely 10.4, 5.6, 3.1, 6.4 and 21.7, use the R command<br>
+      <code>> x &lt;- c(10.4, 5.6, 3.1, 6.4, 21.7)</code><br>
+        This is an assignment statement using the function <code>c()</code> which in this context can take an arbitrary number of vector arguments and whose value is a vector got by concatenating its arguments end to end.<br>
+        A number occurring by itself in an expression is taken as a vector of length one.<br>
+        Notice that the assignment operator (‘<code>&lt;-</code>’), which consists of the two characters ‘<code>&lt;</code>’ (“less than”) and ‘<code>-</code>’ (“minus”) occurring strictly side-by-side and it ‘points’ to the object receiving the value of the expression. In most contexts the ‘<code>=</code>’ operator can be used as an alternative.<br>
+        Assignment can also be made using the function <code>assign()</code>. An equivalent way of making the same assignment as above is with:<br>
+        <code>> assign("x", c(10.4, 5.6, 3.1, 6.4, 21.7))</code><br>
+        The usual operator, <code>&lt;-</code>, can be thought of as a syntactic short-cut to this.<br>
+        Assignments can also be made in the other direction, using the obvious change in the assignment operator. So the same assignment could be made using<br>
+        <code>> c(10.4, 5.6, 3.1, 6.4, 21.7) -> x</code><br>
+        If an expression is used as a complete command, the value is printed and lost. So now if we were to use the command<br>
+        <code>> 1/x</code><br>
+        the reciprocals of the five values would be printed at the terminal (and the value of <code>x</code>, of course, unchanged).<br>
+        The further assignment<br>
+        <code>> y &lt;- c(x, 0, x)</code><br>
+        would create a vector <code>y</code> with 11 entries consisting of two copies of <code>x</code> with a zero in the middle place.</p>
+    </section>
+    <section class="main-section" id="Vector_arithmetic">
+      <header>Vector arithmetic</header>
+      <p>Vectors can be used in arithmetic expressions, in which case the operations are performed element by element. Vectors occurring in the same expression need not all be of the same length. If they are not, the value of the expression is a vector with the same length as the longest vector which occurs in the expression. Shorter vectors in the expression are recycled as often as need be (perhaps fractionally) until they match the length of the longest vector. In particular a constant is simply repeated. So with the above assignments the command<br>
+        <code>> v &lt;- 2*x + y + 1</code><br>
+        generates a new vector <code>v</code> of length 11 constructed by adding together, element by element, <code>2*x</code> repeated 2.2 times, <code>y</code> repeated just once, and 1 repeated 11 times.<br>
+        The elementary arithmetic operators are the usual <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> and <code>^</code> for raising to a power. In addition all of the common arithmetic functions are available. <code>log</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>sqrt</code>, and so on, all have their usual meaning. <code>max</code> and <code>min</code> select the largest and smallest elements of a vector respectively. <code>range</code> is a function whose value is a vector of length two, namely <code>c(min(x), max(x))</code>. <code>length(x)</code> is the number of elements in <code>x</code>, <code>sum(x)</code> gives the total of the elements in <code>x</code>, and <code>prod(x)</code> their product.<br>
+        Two statistical functions are <code>mean(x)</code> which calculates the sample mean, which is the same as <code>sum(x)/length(x)</code>, and <code>var(x)</code> which gives<br>
+        <code>sum((x-mean(x))^2)/(length(x)-1)</code><br>
+        or sample variance. If the argument to <code>var()</code> is an n-by-p matrix the value is a p-by-p sample covariance matrix got by regarding the rows as independent p-variate sample vectors.<br>
+        <code>sort(x)</code> returns a vector of the same size as <code>x</code> with the elements arranged in increasing order; however there are other more flexible sorting facilities available (see <code>order()</code> or <code>sort.list()</code> which produce a permutation to do the sorting).<br>
+        Note that <code>max</code> and <code>min</code> select the largest and smallest values in their arguments, even if they are given several vectors. The parallel maximum and minimum functions <code>pmax</code> and <code>pmin</code> return a vector (of length equal to their longest argument) that contains in each element the largest (smallest) element in that position in any of the input vectors.<br>
+        For most purposes the user will not be concerned if the “numbers” in a numeric vector are integers, reals or even complex. Internally calculations are done as double precision real numbers, or double precision complex numbers if the input data are complex.<br>
+        To work with complex numbers, supply an explicit complex part. Thus<br>
+        <code>sqrt(-17)</code><br>
+        will give <code>NaN</code> and a warning, but<br>
+        <code>sqrt(-17+0i)</code><br>
+        will do the computations as complex numbers.</p>
+    </section>
+    <section class="main-section" id="Generating_regular_sequences">
+      <header>Generating regular sequences</header>
+      <p>R has a number of facilities for generating commonly used sequences of numbers. For example <code>1:30</code> is the vector <code>c(1, 2, …, 29, 30)</code>. The colon operator has high priority within an expression, so, for example <code>2*1:15</code> is the vector <code>c(2, 4, …, 28, 30)</code>. Put <code>n &lt;- 10</code> and compare the sequences <code>1:n-1</code> and <code>1:(n-1)</code>.<br>
+        The construction <code>30:1</code> may be used to generate a sequence backwards.<br>
+        The function <code>seq()</code> is a more general facility for generating sequences. It has five arguments, only some of which may be specified in any one call. The first two arguments, if given, specify the beginning and end of the sequence, and if these are the only two arguments given the result is the same as the colon operator. That is <code>seq(2,10)</code> is the same vector as <code>2:10</code>.<br>
+        Arguments to <code>seq()</code>, and to many other R functions, can also be given in named form, in which case the order in which they appear is irrelevant. The first two arguments may be named <code>from=value</code> and <code>to=value</code>; thus <code>seq(1,30)</code>, <code>seq(from=1, to=30)</code> and <code>seq(to=30, from=1)</code> are all the same as <code>1:30</code>. The next two arguments to <code>seq()</code> may be named <code>by=value</code> and <code>length=value</code>, which specify a step size and a length for the sequence respectively. If neither of these is given, the default <code>by=1</code> is assumed.<br>
+        For example<br>
+        <code>> seq(-5, 5, by=.2) -> s3</code><br>
+        generates in <code>s3</code> the vector <code>c(-5.0, -4.8, -4.6, …, 4.6, 4.8, 5.0)</code>. Similarly<br>
+        <code>> s4 &lt;- seq(length=51, from=-5, by=.2)</code><br>
+        generates the same vector in <code>s4</code>.<br>
+        The fifth argument may be named <code>along=vector</code>, which is normally used as the only argument to create the sequence <code>1, 2, …, length(vector)</code>, or the empty sequence if the vector is empty (as it can be).<br>
+        A related function is <code>rep()</code> which can be used for replicating an object in various complicated ways. The simplest form is<br>
+        <code>> s5 &lt;- rep(x, times=5)</code><br>
+        which will put five copies of <code>x</code> end-to-end in <code>s5</code>. Another useful version is<br>
+        <code>> s6 &lt;- rep(x, each=5)</code><br>
+        which repeats each element of <code>x</code> five times before moving on to the next.</p>
+    </section>
+    <section class="main-section" id="Logical_vectors">
+      <header>Logical vectors</header>
+      <p>As well as numerical vectors, R allows manipulation of logical quantities. The elements of a logical vector can have the values <code>TRUE</code>, <code>FALSE</code>, and <code>NA</code> (for “not available”, see below). The first two are often abbreviated as <code>T</code> and <code>F</code>, respectively. Note however that <code>T</code> and <code>F</code> are just variables which are set to <code>TRUE</code> and <code>FALSE</code> by default, but are not reserved words and hence can be overwritten by the user. Hence, you should always use <code>TRUE</code> and <code>FALSE</code>.<br>
+        Logical vectors are generated by conditions. For example<br>
+        <code>> temp &lt;- x > 13</code><br>
+        sets <code>temp</code> as a vector of the same length as <code>x</code> with values <code>FALSE</code> corresponding to elements of <code>x</code> where the condition is not met and <code>TRUE</code> where it is.<br>
+        The logical operators are <code>&lt;</code>, <code>&lt;=</code>, <code>></code>, <code>>=</code>, <code>==</code> for exact equality and <code>!=</code> for inequality. In addition if <code>c1</code> and <code>c2</code> are logical expressions, then <code>c1 & c2</code> is their intersection (“and”), <code>c1 | c2</code> is their union (“or”), and <code>!c1</code> is the negation of <code>c1</code>.<br>
+        Logical vectors may be used in ordinary arithmetic, in which case they are coerced into numeric vectors, <code>FALSE</code> becoming <code>0</code> and <code>TRUE</code> becoming <code>1</code>. However there are situations where logical vectors and their coerced numeric counterparts are not equivalent, for example see the next subsection.</p>
+    </section>
+    <section class="main-section" id="Missing_values">
+      <header>Missing values</header>
+      <p>In some cases the components of a vector may not be completely known. When an element or value is “not available” or a “missing value” in the statistical sense, a place within a vector may be reserved for it by assigning it the special value <code>NA</code>. In general any operation on an <code>NA</code> becomes an <code>NA</code>. The motivation for this rule is simply that if the specification of an operation is incomplete, the result cannot be known and hence is not available.<br>
+        The function <code>is.na(x)</code> gives a logical vector of the same size as <code>x</code> with value <code>TRUE</code> if and only if the corresponding element in <code>x</code> is <code>NA</code>.<br>
+        <code>> z &lt;- c(1:3,NA);  ind &lt;- is.na(z)</code><br>
+        Notice that the logical expression <code>x == NA</code> is quite different from <code>is.na(x)</code> since <code>NA</code> is not really a value but a marker for a quantity that is not available. Thus <code>x == NA</code> is a vector of the same length as <code>x</code> all of whose values are <code>NA</code> as the logical expression itself is incomplete and hence undecidable.<br>
+        Note that there is a second kind of “missing” values which are produced by numerical computation, the so-called <em>Not a Number</em>, <code>NaN</code>, values. Examples are<br>
+        <code>> 0/0</code><br>
+        or<br>
+        <code>> Inf - Inf</code><br>
+        which both give <code>NaN</code> since the result cannot be defined sensibly.<br>
+        In summary, <code>is.na(xx)</code> is <code>TRUE</code> both for <code>NA</code> and <code>NaN</code> values. To differentiate these, <code>is.nan(xx)</code> is only <code>TRUE</code> for <code>NaNs</code>.<br>
+        Missing values are sometimes printed as <code>&lt;NA></code> when character vectors are printed without quotes.</p>
+    </section>
+    <section class="main-section" id="Character_vectors">
+      <header>Character vectors</header>
+      <p>Character quantities and character vectors are used frequently in R, for example as plot labels. Where needed they are denoted by a sequence of characters delimited by the double quote character, e.g., <code>"x-values"</code>, <code>"New iteration results"</code>.<br>
+        Character strings are entered using either matching double (<code>"</code>) or single (<code>'</code>) quotes, but are printed using double quotes (or sometimes without quotes). They use C-style escape sequences, using <code>\</code> as the escape character, so <code>\</code> is entered and printed as <code>\\</code>, and inside double quotes <code>"</code> is entered as <code>\"</code>. Other useful escape sequences are <code>\n</code>, newline, <code>\t</code>, tab and <code>\b</code>, backspace—see <code>?Quotes</code> for a full list.<br>
+        Character vectors may be concatenated into a vector by the <code>c()</code> function; examples of their use will emerge frequently.<br>
+        The <code>paste()</code> function takes an arbitrary number of arguments and concatenates them one by one into character strings. Any numbers given among the arguments are coerced into character strings in the evident way, that is, in the same way they would be if they were printed. The arguments are by default separated in the result by a single blank character, but this can be changed by the named argument, <code>sep=string</code>, which changes it to <code>string</code>, possibly empty.<br>
+        For example<br>
+        <code>> labs &lt;- paste(c("X","Y"), 1:10, sep="")</code><br>
+        makes <code>labs</code> into the character vector<br>
+        <code>c("X1", "Y2", "X3", "Y4", "X5", "Y6", "X7", "Y8", "X9", "Y10")</code><br>
+        Note particularly that recycling of short lists takes place here too; thus <code>c("X", "Y")</code> is repeated 5 times to match the sequence <code>1:10</code>.</p>
+    </section>
+    <section class="main-section" id="Index_vectors">
+      <header>Index vectors</header>
+      <p>Subsets of the elements of a vector may be selected by appending to the name of the vector an index vector in square brackets. More generally any expression that evaluates to a vector may have subsets of its elements similarly selected by appending an index vector in square brackets immediately after the expression.<br>
+        Such index vectors can be any of four distinct types.</p>
+        <ol>
+          <li><strong>A logical vector.</strong> In this case the index vector is recycled to the same length as the vector from which elements are to be selected. Values corresponding to <code>TRUE</code> in the index vector are selected and those corresponding to <code>FALSE</code> are omitted. For example<br>
+            <code>> y &lt;- x[!is.na(x)]</code><br>
+            creates (or re-creates) an object <code>y</code> which will contain the non-missing values of <code>x</code>, in the same order. Note that if <code>x</code> has missing values, <code>y</code> will be shorter than <code>x</code>. Also<br>
+            <code>> (x+1)[(!is.na(x)) & x>0] -> z</code><br>
+            creates an object <code>z</code> and places in it the values of the vector <code>x+1</code> for which the corresponding value in <code>x</code> was both non-missing and positive.
+          </li>
+          <li><strong>A vector of positive integral quantities.</strong> In this case the values in the index vector must lie in the set {1, 2, …, <code>length(x)</code>}. The corresponding elements of the vector are selected and concatenated, in that order, in the result. The index vector can be of any length and the result is of the same length as the index vector. For example <code>x[6]</code> is the sixth component of <code>x</code> and<br>
+            <code>> x[1:10]</code><br>
+            selects the first 10 elements of <code>x</code> (assuming <code>length(x)</code> is not less than 10). Also<br>
+            <code>> c("x","y")[rep(c(1,2,2,1), times=4)]</code><br>
+            (an admittedly unlikely thing to do) produces a character vector of length 16 consisting of <code>"x"</code>, <code>"y"</code>, <code>"y"</code>, <code>"x"</code> repeated four times.
+          </li>
+          <li><strong>A vector of negative integral quantities.</strong> Such an index vector specifies the values to be excluded rather than included. Thus<br>
+            <code>> y &lt;- x[-(1:5)]</code><br>
+            gives <code>y</code> all but the first five elements of <code>x</code>.
+          </li>
+          <li><strong>A vector of character strings.</strong> This possibility only applies where an object has a <code>names</code> attribute to identify its components. In this case a sub-vector of the <code>names</code> vector may be used in the same way as the positive integral labels in item 2 further above.<br>
+            <code>> fruit &lt;- c(5, 10, 1, 20)<br>
+              > names(fruit) &lt;- c("orange", "banana", "apple", "peach")<br>
+              > lunch &lt;- fruit[c("apple","orange")]</code><br>
+            The advantage is that alphanumeric names are often easier to remember than numeric indices. This option is particularly useful in connection with data frames, as we shall see later.
+          </li>
+        </ol>
+      <p>An indexed expression can also appear on the receiving end of an assignment, in which case the assignment operation is performed only on those elements of the vector. The expression must be of the form <code>vector[index_vector]</code> as having an arbitrary expression in place of the vector name does not make much sense here.<br>
+        For example<br>
+        <code>> x[is.na(x)] &lt;- 0</code><br>
+        replaces any missing values in x by zeros and<br>
+        <code>> y[y &lt; 0] &lt;- -y[y &lt; 0]</code><br>
+        has the same effect as<br>
+        <code>> y &lt;- abs(y)</code></p>
+    </section>
+    <section class="main-section" id="Other_types_of_objects">
+      <header>Other types of objects</header>
+      <p>Vectors are the most important type of object in R, but there are several others which we will meet more formally in later sections.</p>
+      <ul>
+        <li><em>matrices</em> or more generally arrays are multi-dimensional generalizations of vectors. In fact, they are vectors that can be indexed by two or more indices and will be printed in special ways.</li>
+        <li><em>factors</em> provide compact ways to handle categorical data.</li>
+        <li><em>lists</em> are a general form of vector in which the various elements need not be of the same type, and are often themselves vectors or lists. Lists provide a convenient way to return the results of a statistical computation.</li>
+        <li><em>data frames</em> are matrix-like structures, in which the columns can be of different types. Think of data frames as ‘data matrices’ with one row per observational unit but with (possibly) both numerical and categorical variables. Many experiments are best described by data frames: the treatments are categorical but the response is numeric.</li>
+        <li><em>functions</em> are themselves objects in R which can be stored in the project’s workspace. This provides a simple and convenient way to extend R.</li>
+      </ul>
+    </section>
+    <section class="main-section" id="Reference">
+    <header>Reference</header>
+    <p>All the information in this page is a verbatim copy of this <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Simple-manipulations-numbers-and-vectors" target="_blank">manual</a> only used for learning purposes.</p>
+  </section>
+  </div>
+</main>
+</body>
+</html>
